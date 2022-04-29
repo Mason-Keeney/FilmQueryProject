@@ -3,20 +3,29 @@ package com.skilldistillery.filmquery.entities;
 import java.util.List;
 
 public class Film {
-	private int filmId;
+	private int id;
 	private String title;
-	private String desc;
+	private String description;
 	private short releaseYear;
-	private int langId;
-	private int rentDur;
-	private double rate;
-	private int length;
-	private double repCost;
+	private int languageId;
+	private int rentalDuration;
+	private double rentalRate;
+	private Integer length;
+	private double replaceCost;
 	private String rating;
-	private String features;
+	private String specialFeatures;
 	private List<Actor> actors;
+	private String language;
 	
 	
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
 	public List<Actor> getActors() {
 		return actors;
 	}
@@ -25,19 +34,44 @@ public class Film {
 		this.actors = actors;
 	}
 
+	
+	
 	@Override
 	public String toString() {
-		return "Film [filmId=" + filmId + ", title=" + title + ", desc=" + desc + ", releaseYear=" + releaseYear
-				+ ", langId=" + langId + ", rentDur=" + rentDur + ", rate=" + rate + ", length=" + length + ", repCost="
-				+ repCost + ", rating=" + rating + ", features=" + features + "]";
+		return "Film [id=" + id + ", title=" + title + ", description=" + description + ", releaseYear=" + releaseYear
+				+ ", languageId=" + languageId + ", rentalDuration=" + rentalDuration + ", rentalRate=" + rentalRate
+				+ ", length=" + length + ", replaceCost=" + replaceCost + ", rating=" + rating + ", specialFeatures="
+				+ specialFeatures + ", language=" + language + "]";
 	}
 
+	public String listCast() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("");
+		if(!actors.isEmpty())
+			sb.append("Cast:\n");
+		for (int i = 0; i < actors.size(); i++) {
+			sb.append(actors.get(i).getFirstName() + " " + actors.get(i).getLastName() + "\n");
+		}
+			
+		return sb.toString();
+	}
+	
+	public String quickDisplay() {
+		StringBuilder sb = new StringBuilder();  
+		sb.append("Title: " + title +  " || Release Year: " + releaseYear + " || Rating: " + rating + " || Language: " + language + "\n\n");
+		sb.append(description + "\n\n");
+		sb.append(listCast());
+		return sb.toString();
+		
+	}
+	
+
 	public int getFilmId() {
-		return filmId;
+		return id;
 	}
 
 	public void setFilmId(int filmId) {
-		this.filmId = filmId;
+		this.id = filmId;
 	}
 
 	public String getTitle() {
@@ -49,11 +83,11 @@ public class Film {
 	}
 
 	public String getDesc() {
-		return desc;
+		return description;
 	}
 
 	public void setDesc(String desc) {
-		this.desc = desc;
+		this.description = desc;
 	}
 
 	public short getReleaseYear() {
@@ -65,43 +99,43 @@ public class Film {
 	}
 
 	public int getLangId() {
-		return langId;
+		return languageId;
 	}
 
 	public void setLangId(int langId) {
-		this.langId = langId;
+		this.languageId = langId;
 	}
 
 	public int getRentDur() {
-		return rentDur;
+		return rentalDuration;
 	}
 
 	public void setRentDur(int rentDur) {
-		this.rentDur = rentDur;
+		this.rentalDuration = rentDur;
 	}
 
 	public double getRate() {
-		return rate;
+		return rentalRate;
 	}
 
 	public void setRate(double rate) {
-		this.rate = rate;
+		this.rentalRate = rate;
 	}
 
-	public int getLength() {
+	public Integer getLength() {
 		return length;
 	}
 
-	public void setLength(int length) {
+	public void setLength(Integer length) {
 		this.length = length;
 	}
 
 	public double getRepCost() {
-		return repCost;
+		return replaceCost;
 	}
 
 	public void setRepCost(double repCost) {
-		this.repCost = repCost;
+		this.replaceCost = repCost;
 	}
 
 	public String getRating() {
@@ -113,46 +147,46 @@ public class Film {
 	}
 
 	public String getFeatures() {
-		return features;
+		return specialFeatures;
 	}
 
 	public void setFeatures(String features) {
-		this.features = features;
+		this.specialFeatures = features;
 	}
 
 	public Film() {}
 
 	public Film(int filmId, String title, String desc, short releaseYear, int langId, int rentDur, double rate,
-			int length, double repCost, String rating, String features, List<Actor> actors) {
+			Integer length, double repCost, String rating, String features, List<Actor> actors) {
 		super();
-		this.filmId = filmId;
+		this.id = filmId;
 		this.title = title;
-		this.desc = desc;
+		this.description = desc;
 		this.releaseYear = releaseYear;
-		this.langId = langId;
-		this.rentDur = rentDur;
-		this.rate = rate;
+		this.languageId = langId;
+		this.rentalDuration = rentDur;
+		this.rentalRate = rate;
 		this.length = length;
-		this.repCost = repCost;
+		this.replaceCost = repCost;
 		this.rating = rating;
-		this.features = features;
+		this.specialFeatures = features;
 		this.actors = actors;
 	}
 
 	public Film(int filmId, String title, String desc, short releaseYear, int langId, int rentDur, double rate,
-			int length, double repCost, String rating, String features) {
+			Integer length, double repCost, String rating, String features) {
 		super();
-		this.filmId = filmId;
+		this.id = filmId;
 		this.title = title;
-		this.desc = desc;
+		this.description = desc;
 		this.releaseYear = releaseYear;
-		this.langId = langId;
-		this.rentDur = rentDur;
-		this.rate = rate;
+		this.languageId = langId;
+		this.rentalDuration = rentDur;
+		this.rentalRate = rate;
 		this.length = length;
-		this.repCost = repCost;
+		this.replaceCost = repCost;
 		this.rating = rating;
-		this.features = features;
+		this.specialFeatures = features;
 	}
 	
 	
