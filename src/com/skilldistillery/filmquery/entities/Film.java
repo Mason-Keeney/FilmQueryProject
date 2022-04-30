@@ -38,10 +38,10 @@ public class Film {
 	
 	@Override
 	public String toString() {
-		return "Film [id=" + id + ", title=" + title + ", description=" + description + ", releaseYear=" + releaseYear
-				+ ", languageId=" + languageId + ", rentalDuration=" + rentalDuration + ", rentalRate=" + rentalRate
-				+ ", length=" + length + ", replaceCost=" + replaceCost + ", rating=" + rating + ", specialFeatures="
-				+ specialFeatures + ", language=" + language + "]";
+		return "[Title: " + title + " || ID: " + id + " || Release Year: " + releaseYear + " || Length: " + length + " minutes]\n"
+				+ "[Replace Cost: " + replaceCost + " || Rental Duration: " + rentalDuration + " || Rental Rate: " + rentalRate + "]\n"
+				+ "[Language: " + language + " || Rating: " + rating + " || Special Features: "
+				+ specialFeatures + "]\n" + "[Description: " + description + "]\n\n"  + listCast();
 	}
 
 	public String listCast() {
@@ -58,7 +58,7 @@ public class Film {
 	
 	public String quickDisplay() {
 		StringBuilder sb = new StringBuilder();  
-		sb.append("Title: " + title +  " || Release Year: " + releaseYear + " || Rating: " + rating + " || Language: " + language + "\n\n");
+		sb.append("[Title: " + title +  " || Release Year: " + releaseYear + " || Rating: " + rating + " || Language: " + language + "]\n\n");
 		sb.append(description + "\n\n");
 		sb.append(listCast());
 		return sb.toString();
