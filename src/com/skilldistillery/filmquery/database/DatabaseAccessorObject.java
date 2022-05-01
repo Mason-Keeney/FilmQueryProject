@@ -49,7 +49,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				String features = rs.getString("special_features");
 				List<Actor> actors = findActorsByFilmId(conn, filmId);
 				film = new Film(id, title, desc, releaseYear, langId, rentDur, rate, length, repCost, rating, features, actors);
-				setFilmLanguage(conn, film);
+				setOtherFilmAttributes(conn, film);
 			}
 			conn.close();
 			stmt.close();
@@ -110,7 +110,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				List<Actor> actors = findActorsByFilmId(conn, filmId);
 				Film film = new Film(filmId, title, desc, releaseYear, langId, rentDur, rate, length, repCost, rating,
 						features, actors);
-				setFilmLanguage(conn, film);
+				setOtherFilmAttributes(conn, film);
 				films.add(film);
 			}
 
@@ -140,7 +140,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				String features = rs.getString("special_features");
 				Film film = new Film(filmId, title, desc, releaseYear, langId, rentDur, rate, length, repCost, rating,
 						features);
-				setFilmLanguage(conn, film);
+				setOtherFilmAttributes(conn, film);
 				films.add(film);
 			}
 
@@ -220,7 +220,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				List<Actor> actors = findActorsByFilmId(conn, filmId);
 				Film film = new Film(filmId, title, desc, releaseYear, langId, rentDur, rate, length, repCost, rating,
 						features, actors);
-				setFilmLanguage(conn, film);
+				setOtherFilmAttributes(conn, film);
 				films.add(film);
 			}
 
@@ -231,7 +231,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 	
 	
-	private void setFilmLanguage(Connection conn, Film film) {
+	private void setOtherFilmAttributes(Connection conn, Film film) {
 		
 		try (PreparedStatement stmt = prepStatementLanguage(conn, film.getLangId());
 			 ResultSet rs = stmt.executeQuery();) {
@@ -243,6 +243,28 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		}catch (Exception e) {
 				e.printStackTrace();
 		}
+		
+		try (PreparedStatement stmt = prepStatementFilmCategory(conn, film);
+				 ResultSet rs = stmt.executeQuery();) {
+				
+				while(rs.next()) {
+					film.addCategory(rs.getString("name"));
+				} 
+				
+			}catch (Exception e) {
+					e.printStackTrace();
+			}
+		
+		try (PreparedStatement stmt = prepStatementFilmInvCondition(conn, film);
+				 ResultSet rs = stmt.executeQuery();) {
+				
+				while(rs.next()) {
+					film.addInventoryCondition(rs.getString("media_condition"));
+				} 
+				
+			}catch (Exception e) {
+					e.printStackTrace();
+			}
 	}
 	
 	
@@ -292,6 +314,22 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		PreparedStatement tempStmt = conn.prepareStatement(sql);
 		tempStmt.setString(1, "%" + keyPhrase + "%");
 		tempStmt.setString(2, "%" + keyPhrase + "%");
+		return tempStmt;
+	}
+	
+	
+	private PreparedStatement prepStatementFilmCategory(Connection conn, Film film) throws SQLException {
+		String sql = "SELECT category.name FROM category JOIN film_category ON category.id = film_category.category_id JOIN film ON film_category.film_id = film.id WHERE film.id = ?";
+		PreparedStatement tempStmt = conn.prepareStatement(sql);
+				tempStmt.setInt(1, film.getFilmId());
+				return tempStmt;
+	}
+	
+	
+	private PreparedStatement prepStatementFilmInvCondition(Connection conn, Film film) throws SQLException {
+		String sql = "SELECT media_condition, store_id FROM inventory_item WHERE film_id = ?";
+		PreparedStatement tempStmt = conn.prepareStatement(sql);
+		tempStmt.setInt(1, film.getFilmId());
 		return tempStmt;
 	}
 	

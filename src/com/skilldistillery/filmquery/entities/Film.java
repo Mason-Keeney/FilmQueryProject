@@ -1,6 +1,11 @@
 package com.skilldistillery.filmquery.entities;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 public class Film {
 	private int id;
@@ -16,7 +21,71 @@ public class Film {
 	private String specialFeatures;
 	private List<Actor> actors;
 	private String language;
+	private List<String> categories;
+	private List<String> inventoryCondition;
 	
+	{
+		categories = new ArrayList<>();
+		inventoryCondition = new ArrayList<>();
+	}
+	
+	
+	public List<String> getInventoryCondition() {
+		return inventoryCondition;
+	}
+
+	public void setInventoryCondition(List<String> inventoryCondition) {
+		this.inventoryCondition = inventoryCondition;
+	}
+	
+	public void addInventoryCondition(String condition) {
+		inventoryCondition.add(condition);
+	}
+	
+	public String listInventoryCondition() {
+		StringBuilder sb = new StringBuilder();
+		Iterator<String> it = inventoryCondition.iterator();
+		sb.append("Known Conditions: ");
+		while(it.hasNext()) {
+			sb.append(it.next() + ", ");
+		}
+		sb.replace(sb.length()-2, sb.length(), "");
+		sb.append("\n\n");
+		
+		return sb.toString();
+		
+	}
+
+	
+	public List<String> getCategories() {
+		return categories;
+	}
+	
+	
+	public void addCategory(String category) {
+		categories.add(category);
+	}
+
+	
+	public void setCategories(List<String> categories) {
+		this.categories = categories;
+	}
+	
+	
+	public String listCategories() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Categories: ");
+		for(int i = 0; i < categories.size(); i++) {
+			if(i != categories.size() -1) {
+				sb.append(categories.get(i) + " ");
+			} else {
+				sb.append(categories.get(i) + "\n");
+			}
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
+
 	
 	public String getLanguage() {
 		return language;
@@ -41,7 +110,7 @@ public class Film {
 		return "[Title: " + title + " || ID: " + id + " || Release Year: " + releaseYear + " || Length: " + length + " minutes]\n"
 				+ "[Replace Cost: " + replaceCost + " || Rental Duration: " + rentalDuration + " || Rental Rate: " + rentalRate + "]\n"
 				+ "[Language: " + language + " || Rating: " + rating + " || Special Features: "
-				+ specialFeatures + "]\n" + "[Description: " + description + "]\n\n"  + listCast();
+				+ specialFeatures + "]\n" + "[Description: " + description + "]\n\n" + listCategories() + listInventoryCondition() + listCast();
 	}
 
 	public String listCast() {
@@ -188,6 +257,32 @@ public class Film {
 		this.rating = rating;
 		this.specialFeatures = features;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, inventoryCondition, languageId, length, rating, releaseYear, rentalDuration, rentalRate,
+				replaceCost, specialFeatures, title);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Film other = (Film) obj;
+		return id == other.id && Objects.equals(inventoryCondition, other.inventoryCondition)
+				&& languageId == other.languageId && Objects.equals(length, other.length)
+				&& Objects.equals(rating, other.rating) && releaseYear == other.releaseYear
+				&& rentalDuration == other.rentalDuration
+				&& Double.doubleToLongBits(rentalRate) == Double.doubleToLongBits(other.rentalRate)
+				&& Double.doubleToLongBits(replaceCost) == Double.doubleToLongBits(other.replaceCost)
+				&& Objects.equals(specialFeatures, other.specialFeatures) && Objects.equals(title, other.title);
+	}
+	
+	
 	
 	
 

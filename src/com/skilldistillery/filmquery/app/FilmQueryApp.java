@@ -38,7 +38,7 @@ public class FilmQueryApp {
 		  try {
 			  userInput = Integer.parseInt(userInputString);
 		  } catch (NumberFormatException e) {
-			  System.out.println("Please enter a valid number");
+			  System.out.println("Please select an option by entering the number associated with it.");
 			  continue;
 		  }
 		  
@@ -81,7 +81,7 @@ public class FilmQueryApp {
   private void selectFilmByKeyword() {
 	  String id;
 	  do {
-		  System.out.println("What Keyword would you like to use? (0 - Main Menu)");
+		  System.out.println("What keyword or phrase would you like to use? (0 - Main Menu)");
 		  id = input.nextLine();
 		  List<Film> films = db.findFilmsByKeyword(id);
 		  if  (!films.isEmpty() && !id.equals("0")) {
