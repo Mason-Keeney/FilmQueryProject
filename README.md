@@ -1,6 +1,6 @@
 # FilmQueryProject
 
-### WEEK 7 Weekend Project Skill Distillery
+### Week 7 Weekend Project Skill Distillery
 
 ## Description
 The FilmQueryProject uses the sdvid mysql database in order to provide a user feedback based on their input. A user can enter an ID or a Keyword/Phrase to find a Film. After a valid prompt is entered the terminal displays the Film's Title, Release Year, Rating, Language, Description and Cast List. The user is then prompted to either return to the main menu or show the films full details. If a user elects to show the details they will then have the opportunity to continue finding films in the selected manner (i.e. by ID or by keyword/phrase) or return to the main menu.
